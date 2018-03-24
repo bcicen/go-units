@@ -1,10 +1,10 @@
 package units
 
 var (
-	Mass = NewQuantity("mass")
+	Mass = UnitOptionQuantity("mass")
 
 	// metric
-	Gram      = Mass.NewUnit("gram", "g")
+	Gram      = NewUnit("gram", "g", Mass)
 	ExaGram   = Exa(Gram)
 	PetaGram  = Peta(Gram)
 	TeraGram  = Tera(Gram)
@@ -23,13 +23,13 @@ var (
 	AttoGram  = Atto(Gram)
 
 	// imperial
-	Grain  = Mass.NewUnit("grain", "gr", BI)
-	Drachm = Mass.NewUnit("drachm", "dr", BI)
-	Ounce  = Mass.NewUnit("ounce", "oz", BI)
-	Pound  = Mass.NewUnit("pound", "lb", BI)
-	Stone  = Mass.NewUnit("stone", "st", BI)
-	Ton    = Mass.NewUnit("ton", "t", BI)
-	Slug   = Mass.NewUnit("slug", "", BI)
+	Grain  = NewUnit("grain", "gr", Mass, BI)
+	Drachm = NewUnit("drachm", "dr", Mass, BI)
+	Ounce  = NewUnit("ounce", "oz", Mass, BI)
+	Pound  = NewUnit("pound", "lb", Mass, BI)
+	Stone  = NewUnit("stone", "st", Mass, BI)
+	Ton    = NewUnit("ton", "t", Mass, BI)
+	Slug   = NewUnit("slug", "", Mass, BI)
 )
 
 func init() {

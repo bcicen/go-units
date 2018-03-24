@@ -68,7 +68,10 @@ func (mag magnitude) makeUnit(base Unit, addOpts ...UnitOption) Unit {
 		opts = append(opts, opt)
 	}
 
-	u := NewUnit(name, symbol, base.Quantity, opts...)
+	// append quantity name opt
+	opts = append(opts, UnitOptionQuantity(base.Quantity))
+
+	u := NewUnit(name, symbol, opts...)
 
 	// only create conversions to and from base unit
 	ratio := 1.0 * math.Pow(10.0, mag.Power)

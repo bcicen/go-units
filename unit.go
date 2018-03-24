@@ -11,6 +11,8 @@ var (
 	BI = UnitOptionSystem("imperial")
 	SI = UnitOptionSystem("metric")
 	US = UnitOptionSystem("us")
+
+	unitMap = make(map[string]Unit)
 )
 
 type Unit struct {
@@ -23,23 +25,22 @@ type Unit struct {
 }
 
 // NewUnit registers a new Unit within the package, returning the newly created Unit
-func NewUnit(name, symbol, quantity string, opts ...UnitOption) Unit {
-	if _, ok := UnitMap[name]; ok {
+func NewUnit(name, symbol string, opts ...UnitOption) Unit {
+	if _, ok := unitMap[name]; ok {
 		panic(fmt.Errorf("duplicate unit name: %s", name))
 	}
 
 	u := Unit{
-		Name:     name,
-		Symbol:   symbol,
-		Quantity: quantity,
-		plural:   "auto",
+		Name:   name,
+		Symbol: symbol,
+		plural: "auto",
 	}
 
 	for _, opt := range opts {
 		u = opt(u)
 	}
 
-	UnitMap[name] = u
+	unitMap[name] = u
 	log.Debugf("loaded unit %s", name)
 	return u
 }
@@ -101,6 +102,14 @@ func UnitOptionAliases(a ...string) UnitOption {
 func UnitOptionSystem(s string) UnitOption {
 	return func(u Unit) Unit {
 		u.system = s
+		return u
+	}
+}
+
+// Set a quantity label for which this Unit belongs
+func UnitOptionQuantity(s string) UnitOption {
+	return func(u Unit) Unit {
+		u.Quantity = s
 		return u
 	}
 }

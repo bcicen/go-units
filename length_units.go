@@ -1,10 +1,10 @@
 package units
 
 var (
-	Length = NewQuantity("length")
+	Length = UnitOptionQuantity("length")
 
 	// metric
-	Meter      = Length.NewUnit("meter", "m", SI, UnitOptionAliases("metre"))
+	Meter      = NewUnit("meter", "m", Length, SI, UnitOptionAliases("metre"))
 	ExaMeter   = Exa(Meter)
 	PetaMeter  = Peta(Meter)
 	TeraMeter  = Tera(Meter)
@@ -22,12 +22,12 @@ var (
 	FemtoMeter = Femto(Meter)
 	AttoMeter  = Atto(Meter)
 
-	Inch    = Length.NewUnit("inch", "in", BI, UnitOptionPlural("inches"))
-	Foot    = Length.NewUnit("foot", "ft", BI, UnitOptionPlural("feet"))
-	Yard    = Length.NewUnit("yard", "yd", BI)
-	Mile    = Length.NewUnit("mile", "", BI)
-	League  = Length.NewUnit("league", "lea", BI)
-	Furlong = Length.NewUnit("furlong", "fur", BI)
+	Inch    = NewUnit("inch", "in", Length, BI, UnitOptionPlural("inches"))
+	Foot    = NewUnit("foot", "ft", Length, BI, UnitOptionPlural("feet"))
+	Yard    = NewUnit("yard", "yd", Length, BI)
+	Mile    = NewUnit("mile", "", Length, BI)
+	League  = NewUnit("league", "lea", Length, BI)
+	Furlong = NewUnit("furlong", "fur", Length, BI)
 )
 
 func init() {

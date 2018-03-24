@@ -1,9 +1,9 @@
 package units
 
 var (
-	Time = NewQuantity("time")
+	Time = UnitOptionQuantity("time")
 
-	Second      = Time.NewUnit("second", "s")
+	Second      = NewUnit("second", "s", Time)
 	ExaSecond   = Exa(Second)
 	PetaSecond  = Peta(Second)
 	TeraSecond  = Tera(Second)
@@ -21,20 +21,20 @@ var (
 	FemtoSecond = Femto(Second)
 	AttoSecond  = Atto(Second)
 
-	Minute = Time.NewUnit("minute", "min")
-	Hour   = Time.NewUnit("hour", "hr")
-	Day    = Time.NewUnit("day", "d")
-	Month  = Time.NewUnit("month", "")
-	Year   = Time.NewUnit("year", "yr")
+	Minute = NewUnit("minute", "min", Time)
+	Hour   = NewUnit("hour", "hr", Time)
+	Day    = NewUnit("day", "d", Time)
+	Month  = NewUnit("month", "", Time)
+	Year   = NewUnit("year", "yr", Time)
 
-	Decade     = Time.NewUnit("decade", "")
-	Century    = Time.NewUnit("century", "")
-	Millennium = Time.NewUnit("millennium", "")
+	Decade     = NewUnit("decade", "", Time)
+	Century    = NewUnit("century", "", Time)
+	Millennium = NewUnit("millennium", "", Time)
 
 	// more esoteric time units
-	PlanckTime = Time.NewUnit("planck time", "𝑡ₚ")
-	Fortnight  = Time.NewUnit("fortnight", "")
-	Score      = Time.NewUnit("score", "")
+	PlanckTime = NewUnit("planck time", "𝑡ₚ", Time)
+	Fortnight  = NewUnit("fortnight", "", Time)
+	Score      = NewUnit("score", "", Time)
 )
 
 func init() {

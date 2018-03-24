@@ -1,10 +1,10 @@
 package units
 
 var (
-	Volume = NewQuantity("volume")
+	Volume = UnitOptionQuantity("volume")
 
 	// metric
-	Liter      = Volume.NewUnit("liter", "l", UnitOptionAliases("litre"))
+	Liter      = NewUnit("liter", "l", Volume, UnitOptionAliases("litre"))
 	ExaLiter   = Exa(Liter)
 	PetaLiter  = Peta(Liter)
 	TeraLiter  = Tera(Liter)
@@ -23,16 +23,16 @@ var (
 	AttoLiter  = Atto(Liter)
 
 	// imperial
-	Quart      = Volume.NewUnit("quart", "qt", BI)
-	Pint       = Volume.NewUnit("pint", "pt", BI)
-	Gallon     = Volume.NewUnit("gallon", "gal", BI)
-	FluidOunce = Volume.NewUnit("fluid ounce", "fl oz", BI)
+	Quart      = NewUnit("quart", "qt", Volume, BI)
+	Pint       = NewUnit("pint", "pt", Volume, BI)
+	Gallon     = NewUnit("gallon", "gal", Volume, BI)
+	FluidOunce = NewUnit("fluid ounce", "fl oz", Volume, BI)
 
 	// US
-	FluidQuart          = Volume.NewUnit("fluid quart", "", US)
-	FluidPint           = Volume.NewUnit("fluid pint", "", US)
-	FluidGallon         = Volume.NewUnit("fluid gallon", "", US)
-	CustomaryFluidOunce = Volume.NewUnit("customary fluid ounce", "", US)
+	FluidQuart          = NewUnit("fluid quart", "", Volume, US)
+	FluidPint           = NewUnit("fluid pint", "", Volume, US)
+	FluidGallon         = NewUnit("fluid gallon", "", Volume, US)
+	CustomaryFluidOunce = NewUnit("customary fluid ounce", "", Volume, US)
 )
 
 func init() {

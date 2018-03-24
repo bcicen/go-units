@@ -2,35 +2,29 @@ package units
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 )
 
-var (
-	UnitMap = make(map[string]Unit)
-)
-
-// Return sorted list of all Unit names and symbols
-func Names() (a []string) {
-	for _, u := range UnitMap {
-		a = append(a, u.Names()...)
+// Return all registered Units
+func All() (units []Unit) {
+	for _, u := range unitMap {
+		units = append(units, u)
 	}
-	sort.Strings(a)
-	return a
+	return units
 }
 
 // Find Unit matching name or symbol provided
 func Find(s string) (Unit, error) {
 
 	// first try case-sensitive match
-	for _, u := range UnitMap {
+	for _, u := range unitMap {
 		if matchUnit(s, u, true) {
 			return u, nil
 		}
 	}
 
 	// then case-insensitive
-	for _, u := range UnitMap {
+	for _, u := range unitMap {
 		if matchUnit(s, u, false) {
 			return u, nil
 		}
@@ -40,7 +34,7 @@ func Find(s string) (Unit, error) {
 	if strings.HasSuffix(s, "s") || strings.HasSuffix(s, "S") {
 		s = strings.TrimSuffix(s, "s")
 		s = strings.TrimSuffix(s, "S")
-		for _, u := range UnitMap {
+		for _, u := range unitMap {
 			if matchUnit(s, u, false) {
 				return u, nil
 			}

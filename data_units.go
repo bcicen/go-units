@@ -14,19 +14,19 @@ const (
 )
 
 var (
-	Data = NewQuantity("bytes")
+	Data = UnitOptionQuantity("bytes")
 
-	Byte      = Data.NewUnit("byte", "B")
-	KiloByte  = Data.NewUnit("kilobyte", "KB")
-	MegaByte  = Data.NewUnit("megabyte", "MB")
-	GigaByte  = Data.NewUnit("gigabyte", "GB")
-	TeraByte  = Data.NewUnit("terabyte", "TB")
-	PetaByte  = Data.NewUnit("petabyte", "PB")
-	ExaByte   = Data.NewUnit("exabyte", "")
-	ZettaByte = Data.NewUnit("zettabyte", "")
-	YottaByte = Data.NewUnit("yottabyte", "")
+	Byte      = NewUnit("byte", "B", Data)
+	KiloByte  = NewUnit("kilobyte", "KB", Data)
+	MegaByte  = NewUnit("megabyte", "MB", Data)
+	GigaByte  = NewUnit("gigabyte", "GB", Data)
+	TeraByte  = NewUnit("terabyte", "TB", Data)
+	PetaByte  = NewUnit("petabyte", "PB", Data)
+	ExaByte   = NewUnit("exabyte", "", Data)
+	ZettaByte = NewUnit("zettabyte", "", Data)
+	YottaByte = NewUnit("yottabyte", "", Data)
 
-	Bit     = Data.NewUnit("bit", "b")
+	Bit     = NewUnit("bit", "b", Data)
 	ExaBit  = Exa(Bit)
 	PetaBit = Peta(Bit)
 	TeraBit = Tera(Bit)
@@ -34,7 +34,7 @@ var (
 	MegaBit = Mega(Bit)
 	KiloBit = Kilo(Bit)
 
-	Nibble = Data.NewUnit("nibble", "")
+	Nibble = NewUnit("nibble", "", Data)
 )
 
 func init() {
