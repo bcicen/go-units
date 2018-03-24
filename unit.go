@@ -73,7 +73,7 @@ func (u Unit) PluralName() string {
 }
 
 // Return a Value for this Unit
-func (u Unit) Value(v float64) Value { return NewValue(v, u) }
+func (u Unit) MakeValue(v float64) Value { return Value{v, u} }
 
 // Option that may be passed to NewUnit
 type UnitOption func(Unit) Unit

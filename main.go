@@ -13,6 +13,20 @@ func All() (units []Unit) {
 	return units
 }
 
+// ConvertFloat converts a provided float from one Unit to another
+func Convert(x float64, from, to Unit) (Value, error) {
+	fns, err := resolveConv(from, to)
+	if err != nil {
+		return Value{}, err
+	}
+
+	for _, fn := range fns {
+		x = fn(x)
+	}
+
+	return Value{x, to}, nil
+}
+
 // Find Unit matching name or symbol provided
 func Find(s string) (Unit, error) {
 
