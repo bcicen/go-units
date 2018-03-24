@@ -19,6 +19,9 @@ type Value struct {
 	Unit Unit
 }
 
+// NewValue returns a Value for a given Unit
+func NewValue(v float64, u Unit) Value { return Value{v, u} }
+
 // Convert this Value to another Unit, returning the new Value
 func (v Value) Convert(to Unit) (newVal Value, err error) {
 	// allow converting to same unit

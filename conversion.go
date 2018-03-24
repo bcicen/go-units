@@ -81,7 +81,7 @@ func fmtFormula(s string) string {
 func resolveConv(from, to Unit) (fns []conversionFn, err error) {
 	path, err := tree.FindPath(from.Name, to.Name)
 	if err != nil {
-		return fns, err
+		return fns, fmt.Errorf("failed to resolve conversion: %s", err)
 	}
 
 	formula := ""
