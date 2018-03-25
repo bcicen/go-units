@@ -31,10 +31,10 @@ var (
 )
 
 func init() {
-	NewRatioConv(Inch, Meter, 0.0254)
-	NewRatioConv(Foot, Meter, 0.3048)
-	NewRatioConv(Yard, Meter, 0.9144)
-	NewRatioConv(Mile, Meter, 1609.344)
-	NewRatioConv(League, Meter, 4828.032)
-	NewRatioConv(Furlong, Meter, 201.168)
+	NewRatioConversion(Inch, Meter, 0.0254)
+	NewRatioConversion(Foot, Meter, 0.3048)
+	NewRatioConversion(Yard, Meter, 0.9144)
+	NewRatioConversion(Mile, Meter, 1609.344)
+	NewRatioConversion(League, Meter, 4828.032)
+	NewRatioConversion(Furlong, Meter, 201.168)
 }

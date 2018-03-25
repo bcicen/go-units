@@ -75,7 +75,7 @@ func (mag magnitude) makeUnit(base Unit, addOpts ...UnitOption) Unit {
 
 	// only create conversions to and from base unit
 	ratio := 1.0 * math.Pow(10.0, mag.Power)
-	NewRatioConv(u, base, ratio)
+	NewRatioConversion(u, base, ratio)
 
 	return u
 }

@@ -36,13 +36,13 @@ var (
 )
 
 func init() {
-	NewRatioConv(Quart, Liter, 1.1365225)
-	NewRatioConv(Pint, Liter, 0.56826125)
-	NewRatioConv(Gallon, Liter, 4.54609)
-	NewRatioConv(FluidOunce, MilliLiter, 28.4130625)
+	NewRatioConversion(Quart, Liter, 1.1365225)
+	NewRatioConversion(Pint, Liter, 0.56826125)
+	NewRatioConversion(Gallon, Liter, 4.54609)
+	NewRatioConversion(FluidOunce, MilliLiter, 28.4130625)
 
-	NewRatioConv(FluidQuart, Liter, 0.946352946)
-	NewRatioConv(FluidPint, Liter, 0.473176473)
-	NewRatioConv(FluidGallon, Liter, 3.785411784)
-	NewRatioConv(CustomaryFluidOunce, MilliLiter, 29.5735295625)
+	NewRatioConversion(FluidQuart, Liter, 0.946352946)
+	NewRatioConversion(FluidPint, Liter, 0.473176473)
+	NewRatioConversion(FluidGallon, Liter, 3.785411784)
+	NewRatioConversion(CustomaryFluidOunce, MilliLiter, 29.5735295625)
 }

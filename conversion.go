@@ -34,7 +34,7 @@ func (c conversion) From() string { return c.from.Name }
 
 // Register a conversion formula and the inverse, given a ratio of
 // from Unit in to Unit
-func NewRatioConv(from, to Unit, ratio float64) {
+func NewRatioConversion(from, to Unit, ratio float64) {
 	ratioStr := fmt.Sprintf("%.62f", ratio)
 	NewConversion(from, to, fmt.Sprintf("x * %s", ratioStr))
 	NewConversion(to, from, fmt.Sprintf("x / %s", ratioStr))
