@@ -2,8 +2,6 @@ package units
 
 import (
 	"fmt"
-
-	"github.com/bcicen/xiny/log"
 )
 
 var (
@@ -41,7 +39,6 @@ func NewUnit(name, symbol string, opts ...UnitOption) Unit {
 	}
 
 	unitMap[name] = u
-	log.Debugf("loaded unit %s", name)
 	return u
 }
 
@@ -71,9 +68,6 @@ func (u Unit) PluralName() string {
 		return u.plural
 	}
 }
-
-// Return a Value for this Unit
-func (u Unit) MakeValue(v float64) Value { return Value{v, u} }
 
 // Option that may be passed to NewUnit
 type UnitOption func(Unit) Unit

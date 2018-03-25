@@ -24,13 +24,13 @@ func MustConvertFloat(x float64, from, to Unit) Value {
 
 // ConvertFloat converts a provided float from one Unit to another
 func ConvertFloat(x float64, from, to Unit) (Value, error) {
-	fns, err := resolveConv(from, to)
+	path, err := ResolveConversion(from, to)
 	if err != nil {
 		return Value{}, err
 	}
 
-	for _, fn := range fns {
-		x = fn(x)
+	for _, c := range path {
+		x = c.Fn(x)
 	}
 
 	return Value{x, to}, nil

@@ -8,29 +8,29 @@ import (
 
 	valuate "github.com/Knetic/govaluate"
 	"github.com/bcicen/bfstree"
-	"github.com/bcicen/xiny/log"
+	//"github.com/bcicen/xiny/log"
 )
 
 var (
-	convs []conversion
+	convs []Conversion
 	tree  = bfstree.New()
 )
 
-type conversionFn func(float64) float64
+type ConversionFn func(float64) float64
 
-type conversion struct {
+type Conversion struct {
 	from    Unit
 	to      Unit
-	Fn      conversionFn
+	Fn      ConversionFn
 	Formula string
 }
 
 // String representation of conversion formula
-func (c conversion) String() string { return c.Formula }
+func (c Conversion) String() string { return c.Formula }
 
 // Conversion implements bfstree.Edge interface
-func (c conversion) To() string   { return c.to.Name }
-func (c conversion) From() string { return c.from.Name }
+func (c Conversion) To() string   { return c.to.Name }
+func (c Conversion) From() string { return c.from.Name }
 
 // Register a conversion formula and the inverse, given a ratio of
 // from Unit in to Unit
@@ -59,7 +59,7 @@ func NewConversion(from, to Unit, formula string) {
 		return res.(float64)
 	}
 
-	c := conversion{from, to, fn, fmtFormula(formula)}
+	c := Conversion{from, to, fn, fmtFormula(formula)}
 	convs = append(convs, c)
 	tree.AddEdge(c)
 }
@@ -77,34 +77,26 @@ func fmtFormula(s string) string {
 	return s
 }
 
-// Resolve a path of one or more conversions between two units
-func resolveConv(from, to Unit) (fns []conversionFn, err error) {
+// ResolveConversion resolves a path of one or more Conversions between two units
+func ResolveConversion(from, to Unit) (cpath []Conversion, err error) {
 	path, err := tree.FindPath(from.Name, to.Name)
 	if err != nil {
-		return fns, fmt.Errorf("failed to resolve conversion: %s", err)
+		return cpath, fmt.Errorf("failed to resolve conversion: %s", err)
 	}
 
-	formula := ""
 	for _, edge := range path.Edges() {
 		conv, err := lookupConv(edge.From(), edge.To())
 		if err != nil {
-			return fns, err
+			return cpath, err
 		}
-		if formula != "" {
-			formula = fmt.Sprintf("(%s)", strings.Replace(conv.Formula, "x", formula, 1))
-		} else {
-			formula = fmt.Sprintf("(%s)", conv.Formula)
-		}
-		log.Debugf("%s -> %s: %s", edge.From(), edge.To(), conv.Formula)
-		fns = append(fns, conv.Fn)
+		cpath = append(cpath, conv)
 	}
-	log.Infof("%s -> %s: %s", from.Name, to.Name, formula)
 
-	return fns, nil
+	return cpath, nil
 }
 
 // find conversion function between two units
-func lookupConv(from, to string) (c conversion, err error) {
+func lookupConv(from, to string) (c Conversion, err error) {
 	for _, c := range convs {
 		if c.From() == from && c.To() == to {
 			return c, nil
