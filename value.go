@@ -47,14 +47,23 @@ func (v Value) Fmt(opts FmtOptions) string {
 	return fmt.Sprintf("%s %s", vstr, label)
 }
 
-// Convert this Value to another Unit, returning the new Value
+// MustConvert converts this Value to another Unit, panicking on error
+func (v Value) MustConvert(to Unit) Value {
+	newV, err := v.Convert(to)
+	if err != nil {
+		panic(err)
+	}
+	return newV
+}
+
+// Convert converts this Value to another Unit
 func (v Value) Convert(to Unit) (Value, error) {
 	// allow converting to same unit
 	if v.unit.Name == to.Name {
 		return v, nil
 	}
 
-	return Convert(v.val, v.unit, to)
+	return ConvertFloat(v.val, v.unit, to)
 }
 
 // Trim trailing zeros from string

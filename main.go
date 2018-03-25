@@ -13,8 +13,17 @@ func All() (units []Unit) {
 	return units
 }
 
+// MustConvertFloat converts a provided float from one Unit to another, panicking on error
+func MustConvertFloat(x float64, from, to Unit) Value {
+	val, err := ConvertFloat(x, from, to)
+	if err != nil {
+		panic(err)
+	}
+	return val
+}
+
 // ConvertFloat converts a provided float from one Unit to another
-func Convert(x float64, from, to Unit) (Value, error) {
+func ConvertFloat(x float64, from, to Unit) (Value, error) {
 	fns, err := resolveConv(from, to)
 	if err != nil {
 		return Value{}, err
