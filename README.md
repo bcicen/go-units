@@ -18,18 +18,14 @@ import (
 
 func main() {
 	// convert a simple float from celsius to farenheit
-	val, _ := u.ConvertFloat(25.5, u.Celsius, u.Farenheit)
-	fmt.Println(val) // outputs "77.9 farenheit"
+	fmt.Println(u.MustConvertFloat(25.5, u.Celsius, u.Farenheit)) // outputs "77.9 farenheit"
 
 	// convert a units.Value instance
-	val = u.Celsius.MakeValue(25.5)
-	fmt.Println(val) // "25.5 celsius"
+	val := u.NewValue(25.5, u.Celsius)
 
-	val, _ = val.Convert(u.Farenheit)
-	fmt.Println(val) // 77.9 farenheit
-
-	val, _ = val.Convert(u.Kelvin)
-	fmt.Println(val) // 298.65 kelvin
+	fmt.Println(val)                          // "25.5 celsius"
+	fmt.Println(val.MustConvert(u.Farenheit)) // 77.9 farenheit
+	fmt.Println(val.MustConvert(u.Kelvin))    // 298.65 kelvin
 }
 ```
 
@@ -39,8 +35,8 @@ Aside from unit conversions, `go-units` may also be used for generating human-re
 
 ```go
 val := u.NewValue(2.0, u.Nibble)
-fmt.Println(val)                     // 2 nibbles
-fmt.Println(val.MustConvert(u.Byte)) // 1 byte
+fmt.Println(val)                     // "2 nibbles"
+fmt.Println(val.MustConvert(u.Byte)) // "1 byte"
 
 // value formatting options may also be specified:
 opts := u.FmtOptions{
@@ -49,19 +45,20 @@ opts := u.FmtOptions{
 }
 
 val = u.NewValue(15.456932, u.KiloMeter)
-fmt.Println(val)           // 15.456932 kilometers
-fmt.Println(val.Fmt(opts)) // 15.457 km
-fmt.Println(val.Float())   // 15.456932
+fmt.Println(val)           // "15.456932 kilometers"
+fmt.Println(val.Fmt(opts)) // "15.457 km"
+fmt.Println(val.Float())   // "15.456932"
 ```
 
 ### Lookup
 
-The package-level `Find()` method may be used to search for a unit by name, symbol, or alternative spelling:
+The package-level `Find()` method may be used to search for a unit by name, symbol, or alternate spelling:
 ```go
+// symbol
 unit, err := u.Find("m")
-
+// name
 unit, err := u.Find("meter")
-
+// alternate spelling
 unit, err := u.Find("metre")
 ```
 
