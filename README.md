@@ -1,10 +1,12 @@
+[![GoDoc](https://godoc.org/github.com/bcicen/go-units?status.svg)](https://godoc.org/github.com/bcicen/go-units)
+
 # go-units
 
 Go library for manipulating and converting between various units of measurement
 
 ## Usage
 
-Most basic usage example:
+In the most basic usage, `go-units` may be used to convert a value from one unit to another:
 
 ```go
 package main
@@ -15,16 +17,30 @@ import (
 )
 
 func main() {
+	// convert a simple float from celsius to farenheit
 	val, _ := u.ConvertFloat(25.5, u.Celsius, u.Farenheit)
 	fmt.Println(val) // outputs "77.9 farenheit"
+
+	// convert a units.Value instance
+	val = u.Celsius.MakeValue(25.5)
+	fmt.Println(val) // "25.5 celsius"
+
+	val, _ = val.Convert(u.Farenheit)
+	fmt.Println(val) // 77.9 farenheit
+
+	val, _ = val.Convert(u.Kelvin)
+	fmt.Println(val) // 298.65 kelvin
 }
 ```
 
-labels and plural names for units are also handled:
+### Formatting
+
+Aside from unit conversions, `go-units` may also be used for generating human-readable unit labels, plural names, and symbols:
 
 ```go
-fmt.Println(u.Bit.MakeValue(1.0)) // "1 bit"
-fmt.Println(u.Bit.MakeValue(2.0)) // "2 bits"
+val := u.NewValue(2.0, u.Nibble)
+fmt.Println(val)                     // 2 nibbles
+fmt.Println(val.MustConvert(u.Byte)) // 1 byte
 
 // value formatting options may also be specified:
 opts := u.FmtOptions{
@@ -32,20 +48,21 @@ opts := u.FmtOptions{
   Precision: 3,
 }
 
-val := u.KiloMeter.MakeValue(15.456932)
-fmt.Println(val.Fmt(opts)) // "15.457 km"
-fmt.Println(val.Float()) // "15.456932"
+val = u.NewValue(15.456932, u.KiloMeter)
+fmt.Println(val)           // 15.456932 kilometers
+fmt.Println(val.Fmt(opts)) // 15.457 km
+fmt.Println(val.Float())   // 15.456932
 ```
 
 ### Lookup
 
 The package-level `Find()` method may be used to search for a unit by name, symbol, or alternative spelling:
 ```go
-unit, _ := u.Find("m")
+unit, err := u.Find("m")
 
-unit, _ := u.Find("meter")
+unit, err := u.Find("meter")
 
-unit, _ := u.Find("metre")
+unit, err := u.Find("metre")
 ```
 
 ### Custom Units
@@ -54,13 +71,17 @@ unit, _ := u.Find("metre")
 
 ```go
 // register custom unit names
-Dong := u.NewUnit("dong", "do")
 Ding := u.NewUnit("ding", "di")
+Dong := u.NewUnit("dong", "do")
 
 // there are 100 dongs in a ding
-u.NewRatioConv(Ding, Dong, 100.0)
+u.NewRatioConversion(Ding, Dong, 100.0)
 
-val := Ding.MakeValue(25.0)
-newVal, _ := val.Convert(Dong)
-fmt.Printf("%s = %s", val, newVal) // "25 dings = 2500 dongs"
+val := u.NewValue(25.0, Ding)
+
+fmt.Printf("%s = %s\n", val, val.MustConvert(Dong)) // "25 dings = 2500 dongs"
+
+// conversions are automatically registered when using magnitude prefix helper methods
+KiloDong := u.Kilo(Dong)
+fmt.Println(u.MustConvertFloat(1000.0, Dong, KiloDong)) // "1 kilodong"
 ```
