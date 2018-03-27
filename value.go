@@ -72,6 +72,9 @@ func (v Value) Convert(to Unit) (Value, error) {
 // Trim trailing zeros from string
 func trimTrailing(s string) string {
 	s = strings.TrimRight(s, "0")
+	if s == "" {
+		return "0"
+	}
 	if s[len(s)-1] == '.' {
 		s = strings.TrimSuffix(s, ".")
 	}
