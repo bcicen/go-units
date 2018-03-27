@@ -7,10 +7,11 @@ import (
 	"strings"
 )
 
-var DefaultFmtOptions = FmtOptions{false, 6}
+var DefaultFmtOptions = FmtOptions{true, false, 6}
 
 type FmtOptions struct {
-	Short     bool // if false, use unit shortname or symbol
+	Label     bool // if false, unit label/symbol will be omitted
+	Short     bool // if true, use unit shortname or symbol
 	Precision int  // maximum meaningful precision to truncate value
 }
 
@@ -47,6 +48,9 @@ func (v Value) Fmt(opts FmtOptions) string {
 	vstr := strconv.FormatFloat(v.val, 'f', prec, 64)
 	vstr = trimTrailing(vstr)
 
+	if !opts.Label {
+		return vstr
+	}
 	return fmt.Sprintf("%s %s", vstr, label)
 }
 

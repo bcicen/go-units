@@ -40,6 +40,7 @@ fmt.Println(val.MustConvert(u.Byte)) // "1 byte"
 
 // value formatting options may also be specified:
 opts := u.FmtOptions{
+  Label:     true, // append unit name/symbol
   Short:     true, // use unit symbol
   Precision: 3,
 }
