@@ -41,7 +41,7 @@ func (v Value) Fmt(opts FmtOptions) string {
 
 	prec := opts.Precision
 	// expand precision if needed to present meaningful value
-	if v.val < 1 {
+	if v.val < 1 && v.val > 0 {
 		prec = int((math.Log10(v.val)-0.5)*-1) + prec
 	}
 
