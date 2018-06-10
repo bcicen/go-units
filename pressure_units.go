@@ -1,0 +1,58 @@
+package units
+
+var (
+	Pressure = UnitOptionQuantity("pressure")
+
+	// SI unit metric
+	Pascal      = NewUnit("pascal", "Pa", Length, SI)
+	ExaPascal   = Exa(Pascal)
+	PetaPascal  = Peta(Pascal)
+	TeraPascal  = Tera(Pascal)
+	GigaPascal  = Giga(Pascal)
+	MegaPascal  = Mega(Pascal)
+	KiloPascal  = Kilo(Pascal)
+	HectoPascal = Hecto(Pascal)
+	DecaPascal  = Deca(Pascal)
+	DeciPascal  = Deci(Pascal)
+	CentiPascal = Centi(Pascal)
+	MilliPascal = Milli(Pascal)
+	MicroPascal = Micro(Pascal)
+	NanoPascal  = Nano(Pascal)
+	PicoPascal  = Pico(Pascal)
+	FemtoPascal = Femto(Pascal)
+	AttoPascal  = Atto(Pascal)
+
+	// Other
+	at         = NewUnit("technical atmosphere", "at", Pressure, BI, UnitOptionPlural("technical atmospheres"))
+	atm        = NewUnit("standard atmosphere", "atm", Pressure, BI, UnitOptionPlural("standard atmospheres"))
+	Bar        = NewUnit("bar", "bar", Pressure, BI, UnitOptionPlural("bars"))
+	CentiBar   = Centi(Bar)
+	MilliBar   = Milli(Bar)
+	MicroBar   = Micro(Bar)
+	Barye      = NewUnit("barye", "Ba", Pressure, BI, UnitOptionPlural("baryes"))
+	inH2O      = NewUnit("inch of Water Column", "inH2O", Pressure, BI)
+	inHg       = NewUnit("inch of Mercury", "inHg", Pressure, BI)
+	mH2O       = NewUnit("meter of Water Column", "mmH2O", Pressure, BI, UnitOptionPlural("meters of Water Column"))
+	mmH2O      = Milli(mH2O)
+	cmH2O      = Centi(mH2O)
+	mHg        = NewUnit("meter of Mercury", "mmHg", Pressure, BI, UnitOptionPlural("meters of Mercury"))
+	mmHg       = Milli(mHg)
+	cmHg       = Centi(mHg)
+	Newton     = NewUnit("newton per square meter", "N/m²", Pressure, BI)
+	psi        = NewUnit("pound-force per square inch", "psi", Pressure, BI)
+	Torr       = NewUnit("torr", "Torr", Pressure, BI)
+)
+
+func init() {
+	NewRatioConversion(at, Pascal, 98066.5)
+	NewRatioConversion(atm, Pascal, 101325.2738)
+	NewRatioConversion(Bar, Pascal, 98000)
+	NewRatioConversion(Barye, Pascal, 0.1)
+	NewRatioConversion(inH2O, Pascal, 248.84)
+	NewRatioConversion(inHg, Pascal, 3386.38815789)
+	NewRatioConversion(mH2O, Pascal, 980.665)
+	NewRatioConversion(mHg, Pascal, 13332.2368421)
+	NewRatioConversion(Newton, Pascal, 1)
+	NewRatioConversion(psi, Pascal, 6894.757)
+	NewRatioConversion(Torr, Pascal, 133.322368421)
+}
