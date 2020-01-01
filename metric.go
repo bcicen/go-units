@@ -1,7 +1,6 @@
 package units
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -51,15 +50,15 @@ func Atto(b Unit, o ...UnitOption) Unit  { return mags["atto"].makeUnit(b, o...)
 
 // Create magnitude unit and conversion given a base unit
 func (mag magnitude) makeUnit(base Unit, addOpts ...UnitOption) Unit {
-	name := fmt.Sprintf("%s%s", mag.Prefix, base.Name)
-	symbol := fmt.Sprintf("%s%s", mag.Symbol, base.Symbol)
+	name := mag.Prefix + base.Name
+	symbol := mag.Symbol + base.Symbol
 
 	// set system to metric by default
 	opts := []UnitOption{SI}
 
 	// create prefixed aliases if needed
 	for _, alias := range base.aliases {
-		magAlias := fmt.Sprintf("%s%s", mag.Prefix, alias)
+		magAlias := mag.Prefix + alias
 		opts = append(opts, UnitOptionAliases(magAlias))
 	}
 

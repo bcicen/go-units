@@ -1,6 +1,7 @@
 package units
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -36,8 +37,8 @@ func (c Conversion) From() string { return c.from.Name }
 // from Unit in to Unit
 func NewRatioConversion(from, to Unit, ratio float64) {
 	ratioStr := fmt.Sprintf("%.62f", ratio)
-	NewConversion(from, to, fmt.Sprintf("x * %s", ratioStr))
-	NewConversion(to, from, fmt.Sprintf("x / %s", ratioStr))
+	NewConversion(from, to, "x * " + ratioStr)
+	NewConversion(to, from, "x / " + ratioStr)
 }
 
 // NewConversion registers a new conversion formula from one Unit to another
@@ -64,10 +65,11 @@ func NewConversion(from, to Unit, formula string) {
 	tree.AddEdge(c)
 }
 
+var fmtFormulaRe = regexp.MustCompile("(-?[0-9.]+)")
+
 // Replace float in formula string with scientific notation where necessary
 func fmtFormula(s string) string {
-	re := regexp.MustCompile("(-?[0-9.]+)")
-	for _, match := range re.FindAllString(s, -1) {
+	for _, match := range fmtFormulaRe.FindAllString(s, -1) {
 		f, err := strconv.ParseFloat(match, 64)
 		if err != nil {
 			return s
@@ -81,7 +83,7 @@ func fmtFormula(s string) string {
 func ResolveConversion(from, to Unit) (cpath []Conversion, err error) {
 	path, err := tree.FindPath(from.Name, to.Name)
 	if err != nil {
-		return cpath, fmt.Errorf("failed to resolve conversion: %s", err)
+		return cpath, errors.New("failed to resolve conversion: " + err.Error())
 	}
 
 	for _, edge := range path.Edges() {
@@ -102,5 +104,5 @@ func lookupConv(from, to string) (c Conversion, err error) {
 			return c, nil
 		}
 	}
-	return c, fmt.Errorf("conversion not found")
+	return c, errors.New("conversion not found")
 }
