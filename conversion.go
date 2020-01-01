@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
-	"strings"
 
-	valuate "github.com/Knetic/govaluate"
 	"github.com/bcicen/bfstree"
 	//"github.com/bcicen/xiny/log"
 )
@@ -37,30 +35,17 @@ func (c Conversion) From() string { return c.from.Name }
 // from Unit in to Unit
 func NewRatioConversion(from, to Unit, ratio float64) {
 	ratioStr := fmt.Sprintf("%.62f", ratio)
-	NewConversion(from, to, "x * " + ratioStr)
-	NewConversion(to, from, "x / " + ratioStr)
+	NewConversionFromFn(from, to, func(x float64) float64 {
+		return x * ratio
+	}, "x * " + ratioStr)
+	NewConversionFromFn(to, from, func(x float64) float64 {
+		return x / ratio
+	}, "x / " + ratioStr)
 }
 
 // NewConversion registers a new conversion formula from one Unit to another
-func NewConversion(from, to Unit, formula string) {
-	expr, err := valuate.NewEvaluableExpression(formula)
-	if err != nil {
-		panic(err)
-	}
-
-	// create conversion function
-	fn := func(x float64) float64 {
-		params := make(map[string]interface{})
-		params["x"] = x
-
-		res, err := expr.Evaluate(params)
-		if err != nil {
-			panic(err)
-		}
-		return res.(float64)
-	}
-
-	c := Conversion{from, to, fn, fmtFormula(formula)}
+func NewConversionFromFn(from, to Unit, f ConversionFn, formula string) {
+	c := Conversion{from, to, f, fmtFormula(formula)}
 	convs = append(convs, c)
 	tree.AddEdge(c)
 }
@@ -69,13 +54,13 @@ var fmtFormulaRe = regexp.MustCompile("(-?[0-9.]+)")
 
 // Replace float in formula string with scientific notation where necessary
 func fmtFormula(s string) string {
-	for _, match := range fmtFormulaRe.FindAllString(s, -1) {
+	fmtFormulaRe.ReplaceAllStringFunc(s, func(match string) string {
 		f, err := strconv.ParseFloat(match, 64)
 		if err != nil {
 			return s
 		}
-		s = strings.Replace(s, match, fmt.Sprintf("%g", f), 1)
-	}
+		return fmt.Sprintf("%g", f)
+	})
 	return s
 }
 

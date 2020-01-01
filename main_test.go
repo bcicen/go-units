@@ -2,13 +2,11 @@ package units
 
 import (
 	"testing"
-
-	"github.com/bcicen/go-units"
 )
 
 // aggregate all unit names, aliases, etc
 func aggrNames() (a []string) {
-	for _, u := range units.All() {
+	for _, u := range All() {
 		for _, name := range u.Names() {
 			a = append(a, name)
 		}
@@ -17,12 +15,12 @@ func aggrNames() (a []string) {
 }
 
 // aggregate units by quantity
-func aggrByQuantity() map[string][]units.Unit {
-	m := make(map[string][]units.Unit)
+func aggrByQuantity() map[string][]Unit {
+	m := make(map[string][]Unit)
 
-	for _, u := range units.All() {
+	for _, u := range All() {
 		if _, ok := m[u.Quantity]; !ok {
-			m[u.Quantity] = []units.Unit{}
+			m[u.Quantity] = []Unit{}
 		}
 		m[u.Quantity] = append(m[u.Quantity], u)
 	}
@@ -32,7 +30,7 @@ func aggrByQuantity() map[string][]units.Unit {
 
 func TestUnitLookup(t *testing.T) {
 	for _, name := range aggrNames() {
-		u, err := units.Find(name)
+		u, err := Find(name)
 		if err != nil {
 			t.Errorf(err.Error())
 			continue
@@ -42,7 +40,7 @@ func TestUnitLookup(t *testing.T) {
 }
 
 func TestUnitNameOverlap(t *testing.T) {
-	nameMap := make(map[string]units.Unit)
+	nameMap := make(map[string]Unit)
 
 	var total, failed int
 	for _, u := range nameMap {
@@ -65,7 +63,7 @@ func TestPathResolve(t *testing.T) {
 	for qname, qunits := range aggrByQuantity() {
 		t.Logf("testing conversion paths for quantity: %s", qname)
 		for _, u1 := range qunits {
-			v1 := units.NewValue(1.0, u1)
+			v1 := NewValue(1.0, u1)
 			for _, u2 := range qunits {
 				if u1.Name == u2.Name {
 					continue

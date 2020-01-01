@@ -1,5 +1,7 @@
 package units
 
+import "errors"
+
 var (
 	// Shorthand for pre-defined unit systems
 	BI = UnitOptionSystem("imperial")
@@ -21,7 +23,7 @@ type Unit struct {
 // NewUnit registers a new Unit within the package, returning the newly created Unit
 func NewUnit(name, symbol string, opts ...UnitOption) Unit {
 	if _, ok := unitMap[name]; ok {
-		panic(errors.New("duplicate unit name: %s", name))
+		panic(errors.New("duplicate unit name: " + name))
 	}
 
 	u := Unit{
