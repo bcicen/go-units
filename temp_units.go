@@ -9,8 +9,16 @@ var (
 )
 
 func init() {
-	NewConversion(Celsius, Fahrenheit, "x * 1.8 + 32")
-	NewConversion(Fahrenheit, Celsius, "(x - 32) / 1.8")
-	NewConversion(Celsius, Kelvin, "x + 273.15")
-	NewConversion(Kelvin, Celsius, "x - 273.15")
+	NewConversionFromFn(Celsius, Fahrenheit, func(x float64) float64 {
+		return x * 1.8 + 32
+	}, "x * 1.8 + 32")
+	NewConversionFromFn(Fahrenheit, Celsius, func(x float64) float64 {
+		return (x - 32) / 1.8
+	}, "(x - 32) / 1.8")
+	NewConversionFromFn(Celsius, Kelvin, func(x float64) float64 {
+		return x + 273.15
+	}, "x + 273.15")
+	NewConversionFromFn(Kelvin, Celsius, func(x float64) float64 {
+		return x - 273.15
+	}, "x - 273.15")
 }

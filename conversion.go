@@ -1,12 +1,11 @@
 package units
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"strconv"
-	"strings"
 
-	valuate "github.com/Knetic/govaluate"
 	"github.com/bcicen/bfstree"
 	//"github.com/bcicen/xiny/log"
 )
@@ -36,44 +35,32 @@ func (c Conversion) From() string { return c.from.Name }
 // from Unit in to Unit
 func NewRatioConversion(from, to Unit, ratio float64) {
 	ratioStr := fmt.Sprintf("%.62f", ratio)
-	NewConversion(from, to, fmt.Sprintf("x * %s", ratioStr))
-	NewConversion(to, from, fmt.Sprintf("x / %s", ratioStr))
+	NewConversionFromFn(from, to, func(x float64) float64 {
+		return x * ratio
+	}, "x * " + ratioStr)
+	NewConversionFromFn(to, from, func(x float64) float64 {
+		return x / ratio
+	}, "x / " + ratioStr)
 }
 
 // NewConversion registers a new conversion formula from one Unit to another
-func NewConversion(from, to Unit, formula string) {
-	expr, err := valuate.NewEvaluableExpression(formula)
-	if err != nil {
-		panic(err)
-	}
-
-	// create conversion function
-	fn := func(x float64) float64 {
-		params := make(map[string]interface{})
-		params["x"] = x
-
-		res, err := expr.Evaluate(params)
-		if err != nil {
-			panic(err)
-		}
-		return res.(float64)
-	}
-
-	c := Conversion{from, to, fn, fmtFormula(formula)}
+func NewConversionFromFn(from, to Unit, f ConversionFn, formula string) {
+	c := Conversion{from, to, f, fmtFormula(formula)}
 	convs = append(convs, c)
 	tree.AddEdge(c)
 }
 
+var fmtFormulaRe = regexp.MustCompile("(-?[0-9.]+)")
+
 // Replace float in formula string with scientific notation where necessary
 func fmtFormula(s string) string {
-	re := regexp.MustCompile("(-?[0-9.]+)")
-	for _, match := range re.FindAllString(s, -1) {
+	fmtFormulaRe.ReplaceAllStringFunc(s, func(match string) string {
 		f, err := strconv.ParseFloat(match, 64)
 		if err != nil {
 			return s
 		}
-		s = strings.Replace(s, match, fmt.Sprintf("%g", f), 1)
-	}
+		return fmt.Sprintf("%g", f)
+	})
 	return s
 }
 
@@ -81,7 +68,7 @@ func fmtFormula(s string) string {
 func ResolveConversion(from, to Unit) (cpath []Conversion, err error) {
 	path, err := tree.FindPath(from.Name, to.Name)
 	if err != nil {
-		return cpath, fmt.Errorf("failed to resolve conversion: %s", err)
+		return cpath, errors.New("failed to resolve conversion: " + err.Error())
 	}
 
 	for _, edge := range path.Edges() {
@@ -102,5 +89,5 @@ func lookupConv(from, to string) (c Conversion, err error) {
 			return c, nil
 		}
 	}
-	return c, fmt.Errorf("conversion not found")
+	return c, errors.New("conversion not found")
 }

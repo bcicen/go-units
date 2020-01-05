@@ -1,7 +1,6 @@
 package units
 
 import (
-	"fmt"
 	"math"
 	"strconv"
 	"strings"
@@ -51,7 +50,7 @@ func (v Value) Fmt(opts FmtOptions) string {
 	if !opts.Label {
 		return vstr
 	}
-	return fmt.Sprintf("%s %s", vstr, label)
+	return vstr + " " + label
 }
 
 // MustConvert converts this Value to another Unit, panicking on error

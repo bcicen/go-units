@@ -1,8 +1,6 @@
 package units
 
-import (
-	"fmt"
-)
+import "errors"
 
 var (
 	// Shorthand for pre-defined unit systems
@@ -25,7 +23,7 @@ type Unit struct {
 // NewUnit registers a new Unit within the package, returning the newly created Unit
 func NewUnit(name, symbol string, opts ...UnitOption) Unit {
 	if _, ok := unitMap[name]; ok {
-		panic(fmt.Errorf("duplicate unit name: %s", name))
+		panic(errors.New("duplicate unit name: " + name))
 	}
 
 	u := Unit{
@@ -63,7 +61,7 @@ func (u Unit) PluralName() string {
 	case "none":
 		return u.Name
 	case "auto":
-		return fmt.Sprintf("%ss", u.Name)
+		return u.Name + "s"
 	default: // custom plural name
 		return u.plural
 	}
