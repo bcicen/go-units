@@ -14,6 +14,7 @@ const (
 )
 
 var (
+	Bi   = UnitOptionQuantity("bits")
 	Data = UnitOptionQuantity("bytes")
 
 	Byte      = NewUnit("byte", "B", Data)
@@ -26,7 +27,7 @@ var (
 	ZettaByte = NewUnit("zettabyte", "", Data)
 	YottaByte = NewUnit("yottabyte", "", Data)
 
-	Bit     = NewUnit("bit", "b", Data)
+	Bit     = NewUnit("bit", "b", Bi)
 	ExaBit  = Exa(Bit)
 	PetaBit = Peta(Bit)
 	TeraBit = Tera(Bit)
