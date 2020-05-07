@@ -4,7 +4,7 @@ var (
 	Volume = UnitOptionQuantity("volume")
 
 	// metric
-	Liter      = NewUnit("liter", "l", Volume, UnitOptionAliases("litre"))
+	Liter      = NewUnit("liter", "l", Volume, SI, UnitOptionAliases("litre"))
 	ExaLiter   = Exa(Liter)
 	PetaLiter  = Peta(Liter)
 	TeraLiter  = Tera(Liter)
