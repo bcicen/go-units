@@ -2,15 +2,18 @@ package units
 
 import (
 	"errors"
+	"sort"
 	"strings"
 )
 
-// Return all registered Units
-func All() (units []Unit) {
+// Return all registered Units, sorted by name and quantity
+func All() []Unit {
+	units := make(UnitList, 0, len(unitMap))
 	for _, u := range unitMap {
 		units = append(units, u)
 	}
-	return units
+	sort.Sort(units)
+	return []Unit(units)
 }
 
 // MustConvertFloat converts a provided float from one Unit to another, panicking on error
@@ -63,7 +66,7 @@ func Find(s string) (Unit, error) {
 		}
 	}
 
-	return Unit{}, errors.New("unit \""+ s + "\" not found")
+	return Unit{}, errors.New("unit \"" + s + "\" not found")
 }
 
 func matchUnit(s string, u Unit, matchCase bool) bool {

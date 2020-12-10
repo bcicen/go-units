@@ -105,3 +105,15 @@ func UnitOptionQuantity(s string) UnitOption {
 		return u
 	}
 }
+
+type UnitList []Unit
+
+// UnitList implements sort.Interface
+func (a UnitList) Len() int      { return len(a) }
+func (a UnitList) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a UnitList) Less(i, j int) bool {
+	if a[i].Quantity != a[j].Quantity {
+		return a[i].Quantity < a[j].Quantity
+	}
+	return a[i].Name < a[j].Name
+}
