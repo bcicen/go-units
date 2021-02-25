@@ -72,8 +72,11 @@ func (v Value) Convert(to Unit) (Value, error) {
 	return ConvertFloat(v.val, v.unit, to)
 }
 
-// Trim trailing zeros from string
+// Trim trailing zeros from formatted float string
 func trimTrailing(s string) string {
+	if !strings.ContainsRune(s, '.') {
+		return s
+	}
 	s = strings.TrimRight(s, "0")
 	if s == "" {
 		return "0"
