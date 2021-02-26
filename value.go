@@ -22,6 +22,7 @@ type Value struct {
 // NewValue creates a new Value instance
 func NewValue(v float64, u Unit) Value { return Value{v, u} }
 
+func (v Value) Unit() Unit     { return v.unit }
 func (v Value) Float() float64 { return v.val }
 func (v Value) String() string { return v.Fmt(DefaultFmtOptions) }
 
