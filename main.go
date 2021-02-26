@@ -1,3 +1,4 @@
+// Package units is a library for manipulating and converting between various units of measurement
 package units
 
 import (

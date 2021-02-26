@@ -1,4 +1,4 @@
-[![GoDoc](https://godoc.org/github.com/bcicen/go-units?status.svg)](https://godoc.org/github.com/bcicen/go-units)
+[![godocs.io](https://godocs.io/github.com/bcicen/go-units?status.svg)](https://godocs.io/github.com/bcicen/go-units)
 
 # go-units
 
