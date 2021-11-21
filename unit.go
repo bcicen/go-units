@@ -4,9 +4,10 @@ import "errors"
 
 var (
 	// Shorthand for pre-defined unit systems
-	BI = UnitOptionSystem("imperial")
-	SI = UnitOptionSystem("metric")
-	US = UnitOptionSystem("us")
+	BI  = UnitOptionSystem("imperial")
+	SI  = UnitOptionSystem("metric")
+	US  = UnitOptionSystem("us")
+	IEC = UnitOptionPlural("iec")
 
 	unitMap = make(map[string]Unit)
 )

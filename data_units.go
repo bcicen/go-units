@@ -27,13 +27,22 @@ var (
 	ZettaByte = NewUnit("zettabyte", "", Data)
 	YottaByte = NewUnit("yottabyte", "", Data)
 
+	Kibibyte = NewUnit("kibibyte", "KiB", Data, IEC)
+	Mebibyte = NewUnit("mebibyte", "MiB", Data, IEC)
+	Gibibyte = NewUnit("gibibyte", "GiB", Data, IEC)
+	Tebibyte = NewUnit("tebibyte", "TiB", Data, IEC)
+	Pebibyte = NewUnit("pebibyte", "PiB", Data, IEC)
+	Exbibyte = NewUnit("exbibyte", "EiB", Data, IEC)
+	Zebibyte = NewUnit("zebibyte", "ZiB", Data, IEC)
+	Yobibyte = NewUnit("yobibyte", "YiB", Data, IEC)
+
 	Bit     = NewUnit("bit", "b", Bi)
-	ExaBit  = Exa(Bit)
-	PetaBit = Peta(Bit)
-	TeraBit = Tera(Bit)
-	GigaBit = Giga(Bit)
-	MegaBit = Mega(Bit)
 	KiloBit = Kilo(Bit)
+	MegaBit = Mega(Bit)
+	GigaBit = Giga(Bit)
+	TeraBit = Tera(Bit)
+	PetaBit = Peta(Bit)
+	ExaBit  = Exa(Bit)
 
 	Nibble = NewUnit("nibble", "", Data)
 )
@@ -41,6 +50,7 @@ var (
 func init() {
 	NewRatioConversion(Nibble, Bit, 4.0)
 	NewRatioConversion(Byte, Bit, 8.0)
+
 	NewRatioConversion(KiloByte, Byte, kb)
 	NewRatioConversion(MegaByte, Byte, mb)
 	NewRatioConversion(GigaByte, Byte, gb)
@@ -49,4 +59,13 @@ func init() {
 	NewRatioConversion(ExaByte, Byte, eb)
 	NewRatioConversion(ZettaByte, Byte, zb)
 	NewRatioConversion(YottaByte, Byte, yb)
+
+	NewRatioConversion(Kibibyte, Byte, kb)
+	NewRatioConversion(Mebibyte, Byte, mb)
+	NewRatioConversion(Gibibyte, Byte, gb)
+	NewRatioConversion(Tebibyte, Byte, tb)
+	NewRatioConversion(Pebibyte, Byte, pb)
+	NewRatioConversion(Exbibyte, Byte, eb)
+	NewRatioConversion(Zebibyte, Byte, zb)
+	NewRatioConversion(Yobibyte, Byte, yb)
 }
