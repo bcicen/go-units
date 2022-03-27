@@ -26,7 +26,7 @@ var (
 	Inch     = NewUnit("inch", "in", Length, BI, UnitOptionPlural("inches"))
 	Foot     = NewUnit("foot", "ft", Length, BI, UnitOptionPlural("feet"))
 	Yard     = NewUnit("yard", "yd", Length, BI)
-	Mile     = NewUnit("mile", "", Length, BI)
+	Mile     = NewUnit("mile", "mi", Length, BI)
 	League   = NewUnit("league", "lea", Length, BI)
 	Furlong  = NewUnit("furlong", "fur", Length, BI)
 )
