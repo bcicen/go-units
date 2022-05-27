@@ -11,22 +11,22 @@ type magnitude struct {
 }
 
 var mags = map[string]magnitude{
-	"exa":   magnitude{"E", "exa", 18.0},
-	"peta":  magnitude{"P", "peta", 15.0},
-	"tera":  magnitude{"T", "tera", 12.0},
-	"giga":  magnitude{"G", "giga", 9.0},
-	"mega":  magnitude{"M", "mega", 6.0},
-	"kilo":  magnitude{"k", "kilo", 3.0},
-	"hecto": magnitude{"h", "hecto", 2.0},
-	"deca":  magnitude{"da", "deca", 1.0},
-	"deci":  magnitude{"d", "deci", -1.0},
-	"centi": magnitude{"c", "centi", -2.0},
-	"milli": magnitude{"m", "milli", -3.0},
-	"micro": magnitude{"μ", "micro", -6.0},
-	"nano":  magnitude{"n", "nano", -9.0},
-	"pico":  magnitude{"p", "pico", -12.0},
-	"femto": magnitude{"f", "femto", -15.0},
-	"atto":  magnitude{"a", "atto", -18.0},
+	"exa":   {"E", "exa", 18.0},
+	"peta":  {"P", "peta", 15.0},
+	"tera":  {"T", "tera", 12.0},
+	"giga":  {"G", "giga", 9.0},
+	"mega":  {"M", "mega", 6.0},
+	"kilo":  {"k", "kilo", 3.0},
+	"hecto": {"h", "hecto", 2.0},
+	"deca":  {"da", "deca", 1.0},
+	"deci":  {"d", "deci", -1.0},
+	"centi": {"c", "centi", -2.0},
+	"milli": {"m", "milli", -3.0},
+	"micro": {"μ", "micro", -6.0},
+	"nano":  {"n", "nano", -9.0},
+	"pico":  {"p", "pico", -12.0},
+	"femto": {"f", "femto", -15.0},
+	"atto":  {"a", "atto", -18.0},
 }
 
 // Magnitude prefix methods create and return a new Unit, while automatically registering
