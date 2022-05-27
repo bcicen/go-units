@@ -63,9 +63,7 @@ func (mag magnitude) makeUnit(base Unit, addOpts ...UnitOption) Unit {
 	}
 
 	// append any supplmental options
-	for _, opt := range addOpts {
-		opts = append(opts, opt)
-	}
+	opts = append(opts, addOpts...)
 
 	// append quantity name opt
 	opts = append(opts, UnitOptionQuantity(base.Quantity))
