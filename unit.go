@@ -7,7 +7,7 @@ var (
 	BI  = UnitOptionSystem("imperial")
 	SI  = UnitOptionSystem("metric")
 	US  = UnitOptionSystem("us")
-	IEC = UnitOptionPlural("iec")
+	IEC = UnitOptionSystem("iec")
 
 	unitMap = make(map[string]Unit)
 )
