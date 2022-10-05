@@ -7,9 +7,7 @@ import (
 // aggregate all unit names, aliases, etc
 func aggrNames() (a []string) {
 	for _, u := range All() {
-		for _, name := range u.Names() {
-			a = append(a, name)
-		}
+		a = append(a, u.Names()...)
 	}
 	return a
 }

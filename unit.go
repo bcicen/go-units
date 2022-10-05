@@ -84,9 +84,7 @@ func UnitOptionPlural(s string) UnitOption {
 // Additional names, spellings, or symbols that this unit may be referred to as
 func UnitOptionAliases(a ...string) UnitOption {
 	return func(u Unit) Unit {
-		for _, s := range a {
-			u.aliases = append(u.aliases, s)
-		}
+		u.aliases = append(u.aliases, a...)
 		return u
 	}
 }
