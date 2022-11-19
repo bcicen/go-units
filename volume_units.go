@@ -29,8 +29,8 @@ var (
 	FluidOunce = NewUnit("fluid ounce", "fl oz", Volume, BI, UnitOptionAliases("floz"))
 
 	// US
-	FluidQuart          = NewUnit("fluid quart", "", Volume, US)
-	FluidPint           = NewUnit("fluid pint", "", Volume, US)
+	FluidQuart          = NewUnit("fluid quart", "fl qt", Volume, US)
+	FluidPint           = NewUnit("fluid pint", "fl pt", Volume, US)
 	FluidGallon         = NewUnit("fluid gallon", "", Volume, US)
 	CustomaryFluidOunce = NewUnit("customary fluid ounce", "", Volume, US)
 )
