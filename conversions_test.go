@@ -2,7 +2,10 @@ package units
 
 import (
 	"fmt"
+	"math"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // conversionTest struct defines test data for a conversion, where a value of 1.0 in
@@ -3947,7 +3950,7 @@ var convTests = []conversionTest{
 func testConversions(t *testing.T, convTests []conversionTest) {
 	fmtOpts := FmtOptions{false, false, 6}
 	for _, cTest := range convTests {
-		label := fmt.Sprintf("%s to %s conversion", cTest.from, cTest.to)
+		label := fmt.Sprintf("%s <-> %s conversion", cTest.from, cTest.to)
 		t.Run(label, func(t *testing.T) {
 			u1, err := Find(cTest.from)
 			if err != nil {
@@ -3957,12 +3960,21 @@ func testConversions(t *testing.T, convTests []conversionTest) {
 			if err != nil {
 				t.Fatal(err.Error())
 			}
-			res := MustConvertFloat(1.0, u1, u2).Fmt(fmtOpts)
-			if res != cTest.val {
-				t.Errorf("(got: %s, expected: %s)", res, cTest.val)
-			}
+			res := MustConvertFloat(1.0, u1, u2)
+			assert.Equal(t, cTest.val, res.Fmt(fmtOpts),
+				"%s -> %s conversion test failed", cTest.from, cTest.to)
+
+			// test inverse conversion
+			ires := MustConvertFloat(res.Float(), u2, u1)
+			assert.Equal(t, 1.0, roundFloat(ires.Float(), 12),
+				"%s <- %s conversion test failed", cTest.from, cTest.to)
 		})
 	}
+}
+
+func roundFloat(f float64, precision uint) float64 {
+	r := math.Pow(10, float64(precision))
+	return math.Round(f*r) / r
 }
 
 func TestConversionValues(t *testing.T) {
