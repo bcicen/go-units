@@ -38,6 +38,8 @@ func init() {
 	NewRatioConversion(Ounce, Gram, 28.349523125)
 	NewRatioConversion(Pound, Gram, 453.59237)
 	NewRatioConversion(Stone, Gram, 6350.29318)
+
+	// 1 long ton
 	NewRatioConversion(Ton, Gram, 1016046.9088)
 	NewRatioConversion(Slug, Gram, 14593.90294)
 }
