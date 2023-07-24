@@ -42,16 +42,17 @@ func ConvertFloat(x float64, from, to Unit) (Value, error) {
 
 // Find Unit matching name or symbol provided
 func Find(s string) (Unit, error) {
+	allUnits := All()
 
 	// first try case-sensitive match
-	for _, u := range unitMap {
+	for _, u := range allUnits {
 		if matchUnit(s, u, true) {
 			return u, nil
 		}
 	}
 
 	// then case-insensitive
-	for _, u := range unitMap {
+	for _, u := range allUnits {
 		if matchUnit(s, u, false) {
 			return u, nil
 		}

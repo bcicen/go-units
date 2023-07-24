@@ -2,6 +2,8 @@ package units
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // aggregate all unit names, aliases, etc
@@ -53,6 +55,21 @@ func TestUnitNameOverlap(t *testing.T) {
 		}
 	}
 	t.Logf("tested %d unit names, %d overlaps", total, failed)
+}
+
+func TestSimilarSymbolLookup(t *testing.T) {
+	// The casing of gb could match both gigabyte (GB) and gigabit (Gb)
+	symbol := "gb"
+
+	// Run the same assertion multiple times to ensure there is no inconsistency to the results based on random map ordering
+	for range make([]bool, 100) {
+		u, err := Find(symbol)
+		if err != nil {
+			t.Errorf("failed to find unit for symbol %s", symbol)
+		}
+		
+		assert.Equal(t, GigaBit, u)
+	}
 }
 
 // ensure all units within the same quantity resolve
