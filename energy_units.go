@@ -53,9 +53,9 @@ func init() {
 	NewRatioConversion(ElectronVolt, Joule, 1.60218e-19)
 	NewRatioConversion(Calorie, Joule, 4.184)
 	NewRatioConversion(WattHour, Joule, 3600)
+	NewRatioConversion(KiloWattHour, Joule, 3600*1e3)
 	NewRatioConversion(MegaWattHour, Joule, 3600*1e6)
-	NewRatioConversion(KiloWattHour, Watt, 3600*1e6)
-	NewRatioConversion(GigaWattHour, Watt, 3600*1e9)
-	NewRatioConversion(TeraWattHour, Watt, 3600*1e12)
-	NewRatioConversion(PetaWattHour, Watt, 3600*1e14)
+	NewRatioConversion(GigaWattHour, Joule, 3600*1e9)
+	NewRatioConversion(TeraWattHour, Joule, 3600*1e12)
+	NewRatioConversion(PetaWattHour, Joule, 3600*1e15)
 }

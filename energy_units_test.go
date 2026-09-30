@@ -47,3 +47,26 @@ var energyConvTests = []conversionTest{
 func TestEnergy(t *testing.T) {
 	testConversions(t, energyConvTests)
 }
+
+func TestWattHourPrefixesUseJoules(t *testing.T) {
+	cases := []struct {
+		from   Unit
+		joules float64
+	}{
+		{KiloWattHour, 3.6e6},
+		{MegaWattHour, 3.6e9},
+		{GigaWattHour, 3.6e12},
+		{TeraWattHour, 3.6e15},
+		{PetaWattHour, 3.6e18},
+	}
+	for _, tc := range cases {
+		got := MustConvertFloat(1, tc.from, Joule).Float()
+		if got != tc.joules {
+			t.Errorf("%s: got %v, want %v joules", tc.from.Name, got, tc.joules)
+		}
+	}
+
+	if _, err := ConvertFloat(1, KiloWattHour, Watt); err == nil {
+		t.Fatal("kilowatt-hour converted to watt")
+	}
+}
