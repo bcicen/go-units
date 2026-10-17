@@ -37,10 +37,10 @@ func NewRatioConversion(from, to Unit, ratio float64) {
 	ratioStr := fmt.Sprintf("%.62f", ratio)
 	NewConversionFromFn(from, to, func(x float64) float64 {
 		return x * ratio
-	}, "x * " + ratioStr)
+	}, "x * "+ratioStr)
 	NewConversionFromFn(to, from, func(x float64) float64 {
 		return x / ratio
-	}, "x / " + ratioStr)
+	}, "x / "+ratioStr)
 }
 
 // NewConversion registers a new conversion formula from one Unit to another
@@ -66,6 +66,10 @@ func fmtFormula(s string) string {
 
 // ResolveConversion resolves a path of one or more Conversions between two units
 func ResolveConversion(from, to Unit) (cpath []Conversion, err error) {
+	if from.Name == to.Name {
+		return []Conversion{}, nil
+	}
+
 	path, err := tree.FindPath(from.Name, to.Name)
 	if err != nil {
 		return cpath, errors.New("failed to resolve conversion: " + err.Error())
