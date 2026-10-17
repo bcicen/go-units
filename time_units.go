@@ -28,8 +28,8 @@ var (
 	Year   = NewUnit("year", "yr", Time)
 
 	Decade     = NewUnit("decade", "", Time)
-	Century    = NewUnit("century", "", Time)
-	Millennium = NewUnit("millennium", "", Time)
+	Century    = NewUnit("century", "", Time, UnitOptionPlural("centuries"))
+	Millennium = NewUnit("millennium", "", Time, UnitOptionPlural("millennia"))
 
 	// more esoteric time units
 	PlanckTime = NewUnit("planck time", "𝑡ₚ", Time)
