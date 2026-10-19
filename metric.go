@@ -54,6 +54,8 @@ func Deca(b Unit, o ...UnitOption) Unit   { return mags["deca"].makeUnit(b, o...
 func Deci(b Unit, o ...UnitOption) Unit   { return mags["deci"].makeUnit(b, o...) }
 func Centi(b Unit, o ...UnitOption) Unit  { return mags["centi"].makeUnit(b, o...) }
 func Milli(b Unit, o ...UnitOption) Unit  { return mags["milli"].makeUnit(b, o...) }
+
+// Micro magnitude prefix method [uses the Greek letter mu (μ) and not the micro symbol (µ)]
 func Micro(b Unit, o ...UnitOption) Unit  { return mags["micro"].makeUnit(b, o...) }
 func Nano(b Unit, o ...UnitOption) Unit   { return mags["nano"].makeUnit(b, o...) }
 func Pico(b Unit, o ...UnitOption) Unit   { return mags["pico"].makeUnit(b, o...) }

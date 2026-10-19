@@ -40,7 +40,23 @@ func ConvertFloat(x float64, from, to Unit) (Value, error) {
 	return Value{x, to}, nil
 }
 
-// Find Unit matching name or symbol provided
+// Find Unit by matching name or symbol string exactly
+func FindExact(s string) (Unit, error) {
+	allUnits := All()
+
+	for _, u := range allUnits {
+		if matchUnit(s, u, true) {
+			return u, nil
+		}
+	}
+	return Unit{}, errors.New("unit \"" + s + "\" not found")
+}
+
+// Find Unit by matching name or symbol provided
+//
+// If an exact match isn't found, this falls back first on case-insensitive
+// and then tries dropping any trailing 's'. Not recommended for use with symbols
+// (e.g., this randomly resolves 'Mpa' to either millipascal or megapascal).
 func Find(s string) (Unit, error) {
 	allUnits := All()
 
