@@ -72,6 +72,22 @@ func TestSimilarSymbolLookup(t *testing.T) {
 	}
 }
 
+func TestFindExact(t *testing.T) {
+	// exact symbol matches are case-sensitive
+	u, err := FindExact("MPa")
+	assert.NoError(t, err)
+	assert.Equal(t, MegaPascal, u)
+
+	u, err = FindExact("mPa")
+	assert.NoError(t, err)
+	assert.Equal(t, MilliPascal, u)
+
+	// "Mpa" is ambiguous between megapascal and millipascal when case is ignored,
+	// so FindExact should not resolve it
+	_, err = FindExact("Mpa")
+	assert.Error(t, err)
+}
+
 // ensure all units within the same quantity resolve
 // a conversion path
 func TestPathResolve(t *testing.T) {
