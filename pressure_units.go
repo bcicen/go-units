@@ -38,7 +38,7 @@ var (
 	MHg      = NewUnit("meter of Mercury", "mHg", Pressure, BI, UnitOptionPlural("meters of Mercury"))
 	MmHg     = Milli(MHg)
 	CmHg     = Centi(MHg)
-	Newton   = NewUnit("newton per square meter", "N/m²", Pressure, BI, UnitOptionPlural("newtons per square meter"))
+	NewtonM2 = NewUnit("newton per square meter", "N/m²", Pressure, BI, UnitOptionPlural("newtons per square meter"))
 	Psi      = NewUnit("pound-force per square inch", "psi", Pressure, BI, UnitOptionPlural("none"))
 	Torr     = NewUnit("torr", "Torr", Pressure, BI)
 )
@@ -52,7 +52,7 @@ func init() {
 	NewRatioConversion(InHg, Pascal, 3386.38815789)
 	NewRatioConversion(MH2O, Pascal, 9806.65)
 	NewRatioConversion(MHg, Pascal, 133322.368421)
-	NewRatioConversion(Newton, Pascal, 1)
+	NewRatioConversion(NewtonM2, Pascal, 1)
 	NewRatioConversion(Psi, Pascal, 6894.757)
 	NewRatioConversion(Torr, Pascal, 133.322368421)
 }
